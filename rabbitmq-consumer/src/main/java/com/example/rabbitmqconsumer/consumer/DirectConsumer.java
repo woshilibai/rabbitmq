@@ -20,6 +20,11 @@ import java.io.IOException;
 @Slf4j
 public class DirectConsumer {
 
+    /**
+     * 【队列内的一个消息只能有一个消费者】，集群部署下，多个消费者同属于一个消费者组，消息只能被消费者组中的一个消费者进行消费，多个消费者会轮询消费队列中的消息
+     * 消费者组内的消费者彼此是竞争关系，排他的消费消息
+     * 其他交换机同上，或者说与交换机无关，
+     */
     @RabbitListener(queues = "myDirectQueue")
     public void process(Channel channel, Message msg) throws IOException {
         log.info("接收到队列myDirectQueue的消息内容为：{}", new String(msg.getBody()));
